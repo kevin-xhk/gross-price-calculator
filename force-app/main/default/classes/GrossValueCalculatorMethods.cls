@@ -5,8 +5,8 @@
 public with sharing class GrossValueCalculatorMethods {
 
     @AuraEnabled (Cacheable = true)
-    public static String  getCountryCode(Id id){
-        User user=[SELECT Address FROM User WHERE User.Id=:id];
+    public static String  getCountryCode(Id userId){
+        User user=[SELECT Address FROM User WHERE User.Id=:userId];
         return user.Address.getCountry();
     }
 
