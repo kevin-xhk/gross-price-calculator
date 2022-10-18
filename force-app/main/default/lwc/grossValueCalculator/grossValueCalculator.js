@@ -4,6 +4,7 @@
 
 import {LightningElement} from 'lwc';
 import getCountryCode from '@salesforce/apex/GrossValueCalculatorMethods.getCountryCode';
+import getApiResponse from '@salesforce/apex/ApiController.getApiResponse';
 import USER_ID from '@salesforce/user/Id';
 
 export default class GrossValueCalculator extends LightningElement {
@@ -31,13 +32,9 @@ export default class GrossValueCalculator extends LightningElement {
     }
 
     getVatRateFromApi() {
-        let requestOptions = {
-            method: 'GET',
-            headers: {"apikey": "rBSvEuVaGBTw8NrOx6ulwQu6gCeHfitJ", "Content-Type": "application/json"}
-        };
-        fetch("https://api.apilayer.com/tax_data/tax_rates?country=" + this.countryCode, requestOptions)
+        getApiResponse({ countryCode: this.countryCode })
             .then((response) => {
-                return response.json();
+                return JSON.parse(response);
             })
             .then((jsonResponse) => {
                 let Standard_Rate = {
@@ -48,7 +45,7 @@ export default class GrossValueCalculator extends LightningElement {
                 this.apiRate = Standard_Rate.rate;
             })
             .catch(error => {
-                console.log('callout error ===> ' + JSON.stringify(error));
+                console.log('callout error ===> ' + error);
             })
 
     }
