@@ -3,6 +3,7 @@ public with sharing class Test_GrossValueCalculatorMethods {
 
     @isTest
     public static void testGetCountryCodePositive () {
+
         // GIVEN
         Id systemAdminProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1].Id;
         String expectedUserCountry = 'US';
@@ -19,8 +20,8 @@ public with sharing class Test_GrossValueCalculatorMethods {
             LanguageLocaleKey = 'en_US',
             Country = expectedUserCountry
         );
-        insert expectedUser;
 
+        insert expectedUser;
 
         // WHEN
         Test.startTest();
