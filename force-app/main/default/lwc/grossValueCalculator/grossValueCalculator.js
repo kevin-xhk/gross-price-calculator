@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 /**
  * Created by mshkrepa on 10/12/2022.
  */
@@ -11,6 +12,7 @@ export default class GrossValueCalculator extends LightningElement {
 
     resultValue;
     apiRate;
+    
     countryCode;
 
     handleValueOnChange(event) {
@@ -21,6 +23,7 @@ export default class GrossValueCalculator extends LightningElement {
     connectedCallback() {
         getCountryCode({ userId: USER_ID })
             .then(result => {
+                console.log('COUNTRYCODE:' + result);
                 this.countryCode = result;
             })
             .then(() => {
@@ -34,6 +37,7 @@ export default class GrossValueCalculator extends LightningElement {
     getVatRateFromApi() {
         getApiResponse({ countryCode: this.countryCode })
             .then((response) => {
+                console.log(JSON.stringify(JSON.parse(response)))
                 return JSON.parse(response);
             })
             .then((jsonResponse) => {
